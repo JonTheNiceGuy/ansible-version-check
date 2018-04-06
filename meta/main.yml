@@ -1,0 +1,21 @@
+galaxy_info:
+  author: Jon Spriggs
+  description: Need an Ansible Galaxy Role to check the version of Ansible you're running? Here it is! 
+  license: unlicense
+  min_ansible_version: 2.0
+  platforms:
+  - name: ubuntu
+    versions:
+    - all
+  - name: EL
+    versions:
+    - all
+
+  galaxy_tags:
+  - ansible
+  - version
+  - meta
+  - check
+  - self
+  
+dependencies: []

@@ -1,0 +1,44 @@
+Role Name
+=========
+
+This role checks the version of ansible installed on your machine.
+
+Requirements
+------------
+
+None
+
+Role Variables
+--------------
+
+This is a very simple role. Tell the role what the minimum version of Ansible is that it's expected to work on. It will fail if it's not running that version... which means that you can then provision a virtualenv with the *right* version of Ansible :)
+
+Dependencies
+------------
+
+None
+
+Example Playbook
+----------------
+
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+
+    - hosts: localhost
+      tasks:
+      - include_role:
+          name: JonTheNiceGuy.ansible-version-check
+        vars:
+          my_ansible_version_major_min: 2
+          my_ansible_version_minor_min: 2
+          my_ansible_version_point_min: 2
+          my_ansible_version_debug: true
+
+License
+-------
+
+The Unlicense
+
+Author Information
+------------------
+
+An optional section for the role authors to include contact information, or a website (HTML is not allowed).
