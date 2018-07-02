@@ -1,0 +1,8 @@
+---
+- name: WARNING!
+  debug:
+    msg: The use of the legacy value 'my_ansible_version_point_min' has been detected. Please replace with 'my_ansible_version_revision_min'. This will be removed in v1.1.0.
+
+- name: Remap value
+  set_fact:
+    my_ansible_version_revision_min: "{{ my_ansible_version_point_min }}"

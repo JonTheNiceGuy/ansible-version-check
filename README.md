@@ -28,7 +28,7 @@ Example Playbook
         vars:
           my_ansible_version_major_min: 2
           my_ansible_version_minor_min: 2
-          my_ansible_version_point_min: 2
+          my_ansible_version_revision_min: 2
           my_ansible_version_debug: true
 
 License

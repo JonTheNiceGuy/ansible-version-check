@@ -1,25 +1,13 @@
 ---
-- name: Ansible Version Collection
-  shell: "{{ ansible_env._ }} --version | grep ansible | cut -d\\{{ ' '}}{{ ' '}}-f2"
-  register: my_ansible_version
+- name: "[Internal] Check for legacy statements"
+  include_tasks: fix_legacy_terminology.yml
+  when: my_ansible_version_point_min is defined
 
-- name: Ansible Version Collection Check
-  assert:
-    msg: "The version check didn't return a version number"
-    that: 
-      - "my_ansible_version.stdout is defined and my_ansible_version.stdout != ''"
-
-- name: Ansible Version Processing
-  set_fact:
-    my_ansible_version_major: "{{ my_ansible_version.stdout | regex_replace('^(\\d+)(\\.\\d+\\.\\d+)$', '\\1') }}"
-    my_ansible_version_minor: "{{ my_ansible_version.stdout | regex_replace('^(\\d+\\.)(\\d+)(\\.\\d+)$', '\\2') }}"
-    my_ansible_version_point: "{{ my_ansible_version.stdout | regex_replace('^(\\d+\\.\\d+\\.)(\\d+)$', '\\2') }}"
-
-- name: Enhance Debugging
+- name: "[Internal] Enhance Debugging"
   include_tasks: debug.yml
   when: my_ansible_version_debug|default('false')|string != 'false'
 
 - name: Ansible Version Check
   assert:
-    msg: "Requires Ansible {{ my_ansible_version_major_min|int }}.{{ my_ansible_version_minor_min|int }}.{{ my_ansible_version_point_min|int }} or later"
-    that: (my_ansible_version_major|int == my_ansible_version_major_min|int and my_ansible_version_minor|int >= my_ansible_version_minor_min|int and my_ansible_version_point|int >= my_ansible_version_point_min) or (my_ansible_version_major|int == my_ansible_version_major_min|int and my_ansible_version_minor|int > my_ansible_version_minor_min) or (my_ansible_version_major|int > my_ansible_version_major_min)
+    msg: "Requires Ansible {{ my_ansible_version_major_min|int }}.{{ my_ansible_version_minor_min|int }}.{{ my_ansible_version_revision_min|int }} or later - you have {{ ansible_version.major|int }}.{{ ansible_version.minor|int }}.{{ ansible_version.revision|int }}"
+    that: (ansible_version.major|int == my_ansible_version_major_min|int and ansible_version.minor|int >= my_ansible_version_minor_min|int and ansible_version.revision|int >= my_ansible_version_revision_min) or (ansible_version.major|int == my_ansible_version_major_min|int and ansible_version.minor|int > my_ansible_version_minor_min) or (ansible_version.major|int > my_ansible_version_major_min)
